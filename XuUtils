@@ -1,0 +1,65 @@
+/**
+ * XU工具类
+ * @author 徐佳俊
+ * @version 1.0, 2017-11-08
+ */
+public class XuUtils  {
+	/**
+	 * 2017/11/8
+	 * 根据出生日期获取用户年龄
+	 * 通用版
+	 * @param birthday
+	 * @return age
+	 * @author 徐佳俊
+	 */
+	public static int getAge(Date birthday) {
+		// 出生日期
+		Calendar csrq = Calendar.getInstance();
+		csrq.setTime(birthday);
+		// 当前日期
+		Calendar now = Calendar.getInstance();
+		now.setTime(new Date());
+		// 如果出生日期大于当前时间
+		if (now.before(csrq)) {
+			throw new IllegalArgumentException("出生日期大于当前时间？穿越的？");
+		}
+		// 取出系统当前时间的年、月、日部分
+		int yearNow = now.get(Calendar.YEAR);
+		int monthNow = now.get(Calendar.MONTH);
+		int dayOfMonthNow = now.get(Calendar.DAY_OF_MONTH);
+
+		// 取出出生日期的年、月、日部分
+		int yearBirth = csrq.get(Calendar.YEAR);
+		int monthBirth = csrq.get(Calendar.MONTH);
+		int dayOfMonthBirth = csrq.get(Calendar.DAY_OF_MONTH);
+		// 当前年份与出生年份相减，初步计算年龄
+		int age = yearNow - yearBirth;
+		// 当前月份与出生日期的月份相比，如果月份小于出生月份，则年龄上减1，表示不满多少周岁
+		if (monthNow <= monthBirth) {
+			// 如果月份相等，在比较日期，如果当前日，小于出生日，也减1，表示不满多少周岁
+			if (monthNow == monthBirth) {
+				if (dayOfMonthNow < dayOfMonthBirth)
+					age--;
+			} else {
+				age--;
+			}
+		}
+		return age;
+	}
+	/**
+	 * 2017-10-25
+	 * 判断数组中是否有重复元素
+	 * @author xu 
+	 */
+	public static boolean checkRepeat(String[] array){
+		Set<String> set = new HashSet<String>();
+		for(String str : array){
+			set.add(str);
+		}
+		if(set.size() != array.length){
+			return false;//有重复
+		}else{
+			return true;//不重复
+		}
+	}
+}
